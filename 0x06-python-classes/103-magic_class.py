@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
 """Interpretation of MagicClass bytescode to it's actual class definition"""
-import math
 
+import math
 
 class MagicClass:
     """
     MagicClass from bytecode
     Attributes:
-        radius: the radius of the circle to be supplied
+        radius: The radius of the circle to be supplied
     Methods:
         __init__(self, radius=0)
         area(self)
@@ -30,7 +30,7 @@ class MagicClass:
 
     def area(self):
         """
-        Clculate area
+        Calculates area
         Returns:
             area of a circle: 2 * pi * square of radius
         """
@@ -38,7 +38,7 @@ class MagicClass:
 
     def circumference(self):
         """
-        Calculate circumference
+        Calculates circumference
         Returns:
             circumference of a circle: 2 * pi * radius
         """
