@@ -5,9 +5,9 @@
 class Rectangle:
     """ initialize with the width and height with value checks
     Args:
-        width: how phat dis 4polygon gon be
-        height: how tall dis box is
-    Return: nonezo
+        width: how phat this 4polygon gon be
+        height: how tall this box is
+    Return: none zero
     """
 
     def __init__(self, width=0, height=0):
