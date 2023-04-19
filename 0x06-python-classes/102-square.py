@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    Module 102-square
+    Mod 102-square
     It defines a square by private instance attribute
 """
 
