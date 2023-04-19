@@ -9,7 +9,6 @@ class Rectangle:
         height: how tall this box is
     Return: none zero
     """
-
     def __init__(self, width=0, height=0):
         self.width = width
         self.height = height
