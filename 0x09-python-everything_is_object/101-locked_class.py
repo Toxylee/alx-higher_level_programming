@@ -2,7 +2,7 @@
 
 """
 Module 101-locked_class
-This module contains a class LockedClass with no class or object attribute,
+Module contains a class LockedClass with no class or object attribute,
 that prevents the user from dynamically creating new instance.
 """
 
