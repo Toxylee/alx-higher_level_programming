@@ -1,39 +1,30 @@
 #!/usr/bin/python3
-
 """
-This module takes in an argument and displays all values in the states table
-of hbtn_0e_0_usa where name matches the argument.
-N.B: Query must be safe from MYSQL injections
-
+This script takes in an argument and
+displays all values in the states
+where `name` matches the argument
+from the database `hbtn_0e_0_usa`.
+This time the script is safe from
+MySQL injections!
 """
 
-import MySQLdb
+import MySQLdb as db
 from sys import argv
 
-if __name__ == '__main__':
-
-    """Connect to database @argv[3] using localhost and port 3306"""
-    db = MySQLdb.connect(
-            host='localhost',
-            port=3306,
-            user=argv[1],
-            passwd=argv[2],
-            db=argv[3]
-            )
-    state = argv[4]
-    cur = db.cursor()
-    cur.execute("SELECT * FROM states ORDER BY id ASC")
-
-    """Another method
-    query = 'SELECT * FROM states WHERE name=%s ORDER BY
-                 id ASC'
-    rows = cur.execute(query, (argv[4], ))
+if __name__ == "__main__":
     """
+    Access to the database and get the states
+    from the database.
+    """
+    db_connect = db.connect(host="localhost", port=3306,
+                            user=argv[1], passwd=argv[2], db=argv[3])
 
-    """Save all table's rows and return rows turple"""
-    rows = cur.fetchall()
-    for row in rows:
-        if state in row:
-            print(row)
-    cur.close()
-    db.close()
+    db_cursor = db_connect.cursor()
+    db_cursor.execute(
+        "SELECT * FROM states WHERE name LIKE \
+                    BINARY %(name)s ORDER BY states.id ASC", {'name': argv[4]})
+
+    rows_selected = db_cursor.fetchall()
+
+    for row in rows_selected:
+        print(row)

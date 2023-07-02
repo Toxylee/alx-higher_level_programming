@@ -1,38 +1,30 @@
 #!/usr/bin/python3
-
 """
-This module prints the State object with the name passed as argument
-from the database hbtn_0e_6_usa
+This script prints the first State object
+from the database `hbtn_0e_6_usa`.
 """
 
 from sys import argv
-from model_state import Base, State
+from model_state import State, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    """
+    Access to the database and get a state
+    from the database.
+    """
 
-    usr = argv[1]
-    pswd = argv[2]
-    db = argv[3]
-    state_name = argv[4]
+    db_url = "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+        argv[1], argv[2], argv[3])
 
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
-        usr, pswd, db), pool_pre_ping=True)
-
-    Base.metadata.create_all(engine)
-
+    engine = create_engine(db_url)
     Session = sessionmaker(bind=engine)
+
     session = Session()
 
-    try:
-        """Filter by searching using name or column"""
-        state = session.query(State).filter_by(name=state_name).first()
-        if state:
-            print(state.id)
-        else:
-            print('Not found')
-    except IndexError as e:
-        print(e)
-
-    session.close()
+    state = session.query(State).filter(State.name == argv[4]).first()
+    if state is not None:
+        print('{0}'.format(state.id))
+    else:
+        print("Not found")

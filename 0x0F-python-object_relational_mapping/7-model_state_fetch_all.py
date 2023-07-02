@@ -1,38 +1,27 @@
 #!/usr/bin/python3
-
 """
-This module lists all State objects from the database hbtn_0e_6_usa
+This script lists all State objects
+from the database `hbtn_0e_6_usa`.
 """
 
-from model_state import Base, State
 from sys import argv
-from sqlalchemy.orm import sessionmaker
+from model_state import State, Base
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-if __name__ == '__main__':
-    usr = argv[1]
-    pswd = argv[2]
-    db = argv[3]
+if __name__ == "__main__":
+    """
+    Access to the database and get the states
+    from the database.
+    """
 
-    """
-    Establishes connection to the specified database using
-    the provided credentials and configuration.
-    """
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
-        usr, pswd, db), pool_pre_ping=True)
+    db_url = "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+        argv[1], argv[2], argv[3])
 
-    Base.metadata.create_all(engine)
-
-    """
-    Create new session factory so as to be able to perform
-    operations on database
-    """
+    engine = create_engine(db_url)
     Session = sessionmaker(bind=engine)
+
     session = Session()
 
-    states = session.query(State).order_by(State.id).all()
-    """Iterate to retrieve data from state table"""
-    for state in states:
-        print("{:d}: {:s}".format(state.id, state.name))
-
-    session.close()
+    for instance in session.query(State).order_by(State.id):
+        print('{0}: {1}'.format(instance.id, instance.name))
