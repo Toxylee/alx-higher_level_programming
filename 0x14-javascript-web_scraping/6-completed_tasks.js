@@ -1,27 +1,26 @@
 #!/usr/bin/node
 
-// The use of request module
 const request = require('request');
 const url = process.argv[2];
 
-request(url, (err, response, body) => {
+request(url, function (err, response, body) {
   if (err) {
     console.log(err);
   } else if (response.statusCode === 200) {
-    const dic = {};
+    const completed = {};
     const tasks = JSON.parse(body);
     for (const i in tasks) {
       const task = tasks[i];
       if (task.completed === true) {
-        if (dic[task.userId] === undefined) {
-          dic[task.userId] = 1;
+        if (completed[task.userId] === undefined) {
+          completed[task.userId] = 1;
         } else {
-          dic[task.userId]++;
+          completed[task.userId]++;
         }
       }
     }
-    console.log(dic);
+    console.log(completed);
   } else {
-    console.log('Error ' + response.statusCode);
+    console.log('An error occured. Status code: ' + response.statusCode);
   }
 });
